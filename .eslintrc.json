@@ -46,8 +46,7 @@
     "no-empty-function": 2,
     "no-new": 0,
     "max-len": ["error", { "code": 80, "ignoreStrings": true }],
-    "no-nested-ternary": "off",
-    "jsx-props-no-spreading": "disabled"
+    "no-nested-ternary": "off"
   },
   "globals": {
     "fetch": false

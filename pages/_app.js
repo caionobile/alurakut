@@ -1,3 +1,4 @@
+/* eslint-disable react/jsx-props-no-spreading */
 import { createGlobalStyle, ThemeProvider } from "styled-components";
 import { AlurakutStyles } from "@libs/AlurakutCommons";
 import React from "react";
