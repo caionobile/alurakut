@@ -1,4 +1,27 @@
 {
   "presets": ["next/babel"],
-  "plugins": [["styled-components", { "ssr": true }]]
+  "plugins": [
+    ["styled-components", { "ssr": true }],
+    [
+      "module-resolver",
+      {
+        "root": ["./src"],
+        "extensions": [
+          ".ios.ts",
+          ".android.ts",
+          ".ts",
+          ".ios.tsx",
+          ".android.tsx",
+          ".jsx",
+          ".js",
+          ".test.js",
+          ".json"
+        ],
+        "alias": {
+          "@components": "./src/components",
+          "@libs": "./src/libs"
+        }
+      }
+    ]
+  ]
 }

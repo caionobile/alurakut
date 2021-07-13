@@ -19,6 +19,17 @@
       "globalReturn": false
     }
   },
+  "settings": {
+    "import/resolver": {
+      "alias": {
+        "map": [
+          ["@components", "./src/components"],
+          ["@libs", "./src/libs"]
+        ],
+        "extensions": [".js"]
+      }
+    }
+  },
   "rules": {
     "no-use-before-define": "off",
     "react/jsx-filename-extension": "off",
