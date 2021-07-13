@@ -1,0 +1,43 @@
+{
+  "root": true,
+  "parser": "@babel/eslint-parser",
+  "env": {
+    "jest": true
+  },
+  "extends": [
+    "airbnb",
+    "plugin:react/recommended",
+    "plugin:prettier/recommended",
+    "plugin:import/errors",
+    "plugin:import/warnings"
+  ],
+  "plugins": ["react-hooks", "eslint-plugin-no-inline-styles", "import"],
+  "parserOptions": {
+    "sourceType": "module",
+    "allowImportExportEverywhere": false,
+    "ecmaFeatures": {
+      "globalReturn": false
+    }
+  },
+  "rules": {
+    "no-use-before-define": "off",
+    "react/jsx-filename-extension": "off",
+    "react/prop-types": "off",
+    "comma-dangle": "off",
+    "implicit-arrow-linebreak": "off",
+    "no-unused-vars": "off",
+    "operator-linebreak": "off",
+    "object-curly-newline": "off",
+    "react/jsx-curly-newline": "off",
+    "arrow-body-style": ["error", "as-needed"],
+    "no-inline-styles/no-inline-styles": 2,
+    "import/no-unresolved": [2, { "commonjs": true, "amd": true }],
+    "no-empty-function": 2,
+    "no-new": 0,
+    "max-len": ["error", { "code": 80, "ignoreStrings": true }],
+    "no-nested-ternary": "off"
+  },
+  "globals": {
+    "fetch": false
+  }
+}
