@@ -1,5 +1,6 @@
 import { createGlobalStyle, ThemeProvider } from "styled-components";
-import { AlurakutStyles } from "src/libs/AlurakutCommons";
+import { AlurakutStyles } from "@libs/AlurakutCommons";
+import React from "react";
 
 const GlobalStyle = createGlobalStyle`
   /* Reset CSS */
