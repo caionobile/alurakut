@@ -182,7 +182,7 @@ function AlurakutMenuProfileSidebar({ githubUser }) {
         />
         <hr />
         <p>
-          <a className="boxLink" href={`/user/${githubUser}`}>
+          <a className="boxLink" href={`https://github.com/${githubUser}`} target="_blank">
             @{githubUser}
           </a>
         </p>
