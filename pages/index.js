@@ -6,7 +6,7 @@ import {
   AlurakutProfileSidebarMenuDefault,
 } from "@libs/AlurakutCommons";
 import { ProfileRelationsBoxWrapper } from "@components/ProfileRelations";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 
 const ProfileSidebar = ({ user }) => {
   return (
@@ -32,15 +32,6 @@ const ProfileSidebar = ({ user }) => {
 };
 
 /*   useEffect(() => {
-    fetch(`https://pokeapi.co/api/v2/pokemon?offset=0&limit=20`)
-      .then((res) => res.json())
-      .then((data) => {
-        const pokeArray = data["results"].map((poke) => poke.name);
-      });
-      setPokemons(pokeArray)
-  }); */
-
-/*   useEffect(() => {
     fetch(`https://api.github.com/users/${githubUser}/followers`)
       .then((res) => res.json())
       .then((data) => {
@@ -50,9 +41,19 @@ const ProfileSidebar = ({ user }) => {
 
 export default function Home() {
   const githubUser = "caionobile";
-  const people = ["aline", "breno", "arthur"];
-  /*   const comunidades = ["Alurakut"]; */
   const [comunidades, setComunidades] = useState([]);
+  const [amigos, setAmigos] = useState([]);
+
+  useEffect(() => {
+    fetch(`https://api.github.com/users/${githubUser}/followers`)
+      .then((res) => res.json())
+      .then((data) => {
+        setAmigos(
+          ...amigos,
+          data.map((user) => user.login)
+        );
+      });
+  }, []);
 
   const handleCriaComunidade = (e) => {
     e.preventDefault();
@@ -113,12 +114,12 @@ export default function Home() {
               <span style={{ color: "#2E7BB4" }}>({people.length})</span>
             </h2>
             <ul>
-              {people.map((i) => {
+              {amigos.map((amigo) => {
                 return (
-                  <li key={i}>
-                    <a href={`https://github.com/${githubUser}.png`}>
-                      <img src={`https://github.com/${githubUser}.png`}></img>
-                      <span>{i}</span>
+                  <li key={amigo}>
+                    <a href={`https://github.com/${amigo}`} target="_blank">
+                      <img src={`https://github.com/${amigo}.png`}></img>
+                      <span>{amigo}</span>
                     </a>
                   </li>
                 );
@@ -130,18 +131,20 @@ export default function Home() {
               Minhas comunidades{" "}
               <span style={{ color: "#2E7BB4" }}>({comunidades.length})</span>
             </h2>
-            <ul>
-              {comunidades.map((comunidade) => {
-                return (
-                  <li key={comunidade.id}>
-                    <a href={`/users/${comunidade.title}`}>
-                      <img src={comunidade.image}></img>
-                      <span>{comunidade.title}</span>
-                    </a>
-                  </li>
-                );
-              })}
-            </ul>
+            {
+              <ul>
+                {comunidades.map((comunidade) => {
+                  return (
+                    <li key={comunidade.id}>
+                      <a href={`/users/${comunidade.title}`}>
+                        <img src={comunidade.image}></img>
+                        <span>{comunidade.title}</span>
+                      </a>
+                    </li>
+                  );
+                })}
+              </ul>
+            }
           </ProfileRelationsBoxWrapper>
         </div>
       </MainGrid>
