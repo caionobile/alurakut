@@ -31,20 +31,12 @@ const ProfileSidebar = ({ user }) => {
   );
 };
 
-/*   useEffect(() => {
-    fetch(`https://api.github.com/users/${githubUser}/followers`)
-      .then((res) => res.json())
-      .then((data) => {
-        data.map((user) => setFollowers(user.login));
-      });
-  }); */
-
 export default function Home() {
   const githubUser = "caionobile";
   const [comunidades, setComunidades] = useState([]);
   const [amigos, setAmigos] = useState([]);
 
-  useEffect(() => {
+  /*   useEffect(() => {
     fetch(`https://api.github.com/users/${githubUser}/followers`)
       .then((res) => res.json())
       .then((data) => {
@@ -53,7 +45,7 @@ export default function Home() {
           data.map((user) => user.login)
         );
       });
-  }, []);
+  }, []); */
 
   const handleCriaComunidade = (e) => {
     e.preventDefault();
@@ -63,9 +55,25 @@ export default function Home() {
       title: formData.get("title"),
       image: formData.get("image"),
     };
-    if (comunidade.title && comunidade.image) {
+    if (comunidade.title) {
+      if (!isURL(comunidade.image)) {
+        comunidade.image = `https://picsum.photos/400/400?${Date.now()}`;
+      }
       setComunidades([...comunidades, comunidade]);
     }
+  };
+
+  const isURL = (url) => {
+    const pattern = new RegExp(
+      "^(https?:\\/\\/)?" + // protocol
+        "((([a-z\\d]([a-z\\d-]*[a-z\\d])*)\\.)+[a-z]{2,}|" + // domain name
+        "((\\d{1,3}\\.){3}\\d{1,3}))" + // OR ip (v4) address
+        "(\\:\\d+)?(\\/[-a-z\\d%_.~+]*)*" + // port and path
+        "(\\?[;&a-z\\d%_.~+=-]*)?" + // query string
+        "(\\#[-a-z\\d_]*)?$",
+      "i"
+    ); // fragment locator
+    return !!pattern.test(url);
   };
 
   return (
@@ -111,9 +119,9 @@ export default function Home() {
           <ProfileRelationsBoxWrapper>
             <h2 className="smallTitle">
               Meus amigos{" "}
-              <span style={{ color: "#2E7BB4" }}>({people.length})</span>
+              <span style={{ color: "#2E7BB4" }}>({amigos.length})</span>
             </h2>
-            <ul>
+            {/*             <ul>
               {amigos.map((amigo) => {
                 return (
                   <li key={amigo}>
@@ -124,7 +132,7 @@ export default function Home() {
                   </li>
                 );
               })}
-            </ul>
+            </ul> */}
           </ProfileRelationsBoxWrapper>
           <ProfileRelationsBoxWrapper>
             <h2 className="smallTitle">
