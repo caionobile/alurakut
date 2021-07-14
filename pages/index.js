@@ -36,7 +36,7 @@ export default function Home() {
   const [comunidades, setComunidades] = useState([]);
   const [amigos, setAmigos] = useState([]);
 
-  useEffect(() => {
+    useEffect(() => {
     fetch(`https://api.github.com/users/${githubUser}/followers`)
       .then((res) => res.json())
       .then((data) => {
@@ -65,14 +65,13 @@ export default function Home() {
 
   const isURL = (url) => {
     const pattern = new RegExp(
-      "^(https?:\\/\\/)?" + // protocol
-        "((([a-z\\d]([a-z\\d-]*[a-z\\d])*)\\.)+[a-z]{2,}|" + // domain name
-        "((\\d{1,3}\\.){3}\\d{1,3}))" + // OR ip (v4) address
-        "(\\:\\d+)?(\\/[-a-z\\d%_.~+]*)*" + // port and path
-        "(\\?[;&a-z\\d%_.~+=-]*)?" + // query string
-        "(\\#[-a-z\\d_]*)?$",
+      "((http|https)://)(www.)?" +
+        "[a-zA-Z0-9@:%._\\+~#?&//=]" +
+        "{2,256}\\.[a-z]" +
+        "{2,6}\\b([-a-zA-Z0-9@:%" +
+        "._\\+~#?&//=]*)",
       "i"
-    ); // fragment locator
+    ); 
     return !!pattern.test(url);
   };
 
@@ -85,7 +84,7 @@ export default function Home() {
         </div>
         <div style={{ gridArea: "welcomeArea" }}>
           <Box>
-            <h1 className="title">Bem vindo(a)</h1>
+            <h1 className="title">Bem vindo(a), {githubUser}</h1>
             <OrkutNostalgicIconSet></OrkutNostalgicIconSet>
           </Box>
           <Box>
