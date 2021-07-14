@@ -36,7 +36,7 @@ export default function Home() {
   const [comunidades, setComunidades] = useState([]);
   const [amigos, setAmigos] = useState([]);
 
-  /*   useEffect(() => {
+  useEffect(() => {
     fetch(`https://api.github.com/users/${githubUser}/followers`)
       .then((res) => res.json())
       .then((data) => {
@@ -45,7 +45,7 @@ export default function Home() {
           data.map((user) => user.login)
         );
       });
-  }, []); */
+  }, []);
 
   const handleCriaComunidade = (e) => {
     e.preventDefault();
@@ -121,18 +121,20 @@ export default function Home() {
               Meus amigos{" "}
               <span style={{ color: "#2E7BB4" }}>({amigos.length})</span>
             </h2>
-            {/*             <ul>
-              {amigos.map((amigo) => {
-                return (
-                  <li key={amigo}>
-                    <a href={`https://github.com/${amigo}`} target="_blank">
-                      <img src={`https://github.com/${amigo}.png`}></img>
-                      <span>{amigo}</span>
-                    </a>
-                  </li>
-                );
-              })}
-            </ul> */}
+            {
+              <ul>
+                {amigos.map((amigo) => {
+                  return (
+                    <li key={amigo}>
+                      <a href={`https://github.com/${amigo}`} target="_blank">
+                        <img src={`https://github.com/${amigo}.png`}></img>
+                        <span>{amigo}</span>
+                      </a>
+                    </li>
+                  );
+                })}
+              </ul>
+            }
           </ProfileRelationsBoxWrapper>
           <ProfileRelationsBoxWrapper>
             <h2 className="smallTitle">
