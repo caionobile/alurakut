@@ -41,7 +41,7 @@ export function AlurakutMenu({ githubUser }) {
         <nav>
           <a href={`/logout`}>Sair</a>
           <div>
-            <input placeholder="Pesquisar no Orkut" />
+            <input placeholder="Pesquisar no Alurakut" />
           </div>
         </nav>
 

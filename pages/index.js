@@ -8,21 +8,21 @@ import {
 import { ProfileRelationsBoxWrapper } from "@components/ProfileRelations";
 import { useEffect, useState } from "react";
 
-const ProfileSidebar = ({ user }) => {
+const ProfileSidebar = ({ githubUser }) => {
   return (
     <Box>
       <img
-        src={`https://github.com/${user}.png`}
+        src={`https://github.com/${githubUser}.png`}
         style={{ borderRadius: 8 }}
       ></img>
       <hr />
       <p>
         <a
           className="boxLink"
-          href={`https://github.com/${user}`}
+          href={`https://github.com/${githubUser}`}
           target="_blank"
         >
-          @{user}
+          @{githubUser}
         </a>
       </p>
       <hr />
@@ -78,10 +78,10 @@ export default function Home() {
 
   return (
     <>
-      <AlurakutMenu />
+      <AlurakutMenu githubUser={githubUser} />
       <MainGrid>
         <div className="profileArea" style={{ gridArea: "profileArea" }}>
-          <ProfileSidebar user={githubUser}></ProfileSidebar>
+          <ProfileSidebar githubUser={githubUser}></ProfileSidebar>
         </div>
         <div style={{ gridArea: "welcomeArea" }}>
           <Box>
@@ -144,7 +144,7 @@ export default function Home() {
                 {comunidades.map((comunidade) => {
                   return (
                     <li key={comunidade.id}>
-                      <a href={`/users/${comunidade.title}`}>
+                      <a>
                         <img src={comunidade.image}></img>
                         <span>{comunidade.title}</span>
                       </a>
