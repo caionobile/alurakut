@@ -36,7 +36,7 @@ export default function Home() {
   const [comunidades, setComunidades] = useState([]);
   const [amigos, setAmigos] = useState([]);
 
-/*   useEffect(() => {
+  useEffect(() => {
     fetch(`https://api.github.com/users/${githubUser}/followers`)
       .then((res) => res.json())
       .then((data) => {
@@ -49,7 +49,7 @@ export default function Home() {
           }))
         );
       });
-  }, []); */
+  }, []);
 
   const handleCriaComunidade = (e) => {
     e.preventDefault();
