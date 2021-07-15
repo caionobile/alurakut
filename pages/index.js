@@ -5,7 +5,7 @@ import {
   OrkutNostalgicIconSet,
   AlurakutProfileSidebarMenuDefault,
 } from "@libs/AlurakutCommons";
-import { ProfileRelationsBoxWrapper } from "@components/ProfileRelations";
+import ProfileRelations from "@components/ProfileRelations";
 import { useEffect, useState } from "react";
 
 const ProfileSidebar = ({ githubUser }) => {
@@ -36,13 +36,17 @@ export default function Home() {
   const [comunidades, setComunidades] = useState([]);
   const [amigos, setAmigos] = useState([]);
 
-    useEffect(() => {
+  useEffect(() => {
     fetch(`https://api.github.com/users/${githubUser}/followers`)
       .then((res) => res.json())
       .then((data) => {
         setAmigos(
-          ...amigos,
-          data.map((user) => user.login)
+          data.map((user) => ({
+            id: user.login,
+            name: user.login,
+            image: `https://github.com/${user.login}.png`,
+            link: `https://github.com/${user.login}`,
+          }))
         );
       });
   }, []);
@@ -52,10 +56,10 @@ export default function Home() {
     const formData = new FormData(e.target);
     const comunidade = {
       id: new Date().toISOString(),
-      title: formData.get("title"),
+      name: formData.get("title"),
       image: formData.get("image"),
     };
-    if (comunidade.title) {
+    if (comunidade.name) {
       if (!isURL(comunidade.image)) {
         comunidade.image = `https://picsum.photos/400/400?${Date.now()}`;
       }
@@ -71,7 +75,7 @@ export default function Home() {
         "{2,6}\\b([-a-zA-Z0-9@:%" +
         "._\\+~#?&//=]*)",
       "i"
-    ); 
+    );
     return !!pattern.test(url);
   };
 
@@ -106,7 +110,6 @@ export default function Home() {
                   type="text"
                 />
               </div>
-
               <button>Criar comunidade</button>
               {/*               
               <button>Escrever depoimento</button>
@@ -115,46 +118,11 @@ export default function Home() {
           </Box>
         </div>
         <div style={{ gridArea: "profileRelationsArea" }}>
-          <ProfileRelationsBoxWrapper>
-            <h2 className="smallTitle">
-              Meus amigos{" "}
-              <span style={{ color: "#2E7BB4" }}>({amigos.length})</span>
-            </h2>
-            {
-              <ul>
-                {amigos.map((amigo) => {
-                  return (
-                    <li key={amigo}>
-                      <a href={`https://github.com/${amigo}`} target="_blank">
-                        <img src={`https://github.com/${amigo}.png`}></img>
-                        <span>{amigo}</span>
-                      </a>
-                    </li>
-                  );
-                })}
-              </ul>
-            }
-          </ProfileRelationsBoxWrapper>
-          <ProfileRelationsBoxWrapper>
-            <h2 className="smallTitle">
-              Minhas comunidades{" "}
-              <span style={{ color: "#2E7BB4" }}>({comunidades.length})</span>
-            </h2>
-            {
-              <ul>
-                {comunidades.map((comunidade) => {
-                  return (
-                    <li key={comunidade.id}>
-                      <a>
-                        <img src={comunidade.image}></img>
-                        <span>{comunidade.title}</span>
-                      </a>
-                    </li>
-                  );
-                })}
-              </ul>
-            }
-          </ProfileRelationsBoxWrapper>
+          <ProfileRelations relationName="Meus amigos" items={amigos} />
+          <ProfileRelations
+            relationName="Minhas comunidades"
+            items={comunidades}
+          />
         </div>
       </MainGrid>
     </>

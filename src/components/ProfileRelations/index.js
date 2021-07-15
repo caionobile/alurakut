@@ -1,7 +1,7 @@
 import styled from "styled-components";
-import Box from "../Box";
+import Box from "@components/Box";
 
-export const ProfileRelationsBoxWrapper = styled(Box)`
+const ProfileRelationsBoxWrapper = styled(Box)`
   ul {
     display: grid;
     grid-gap: 8px;
@@ -50,3 +50,45 @@ export const ProfileRelationsBoxWrapper = styled(Box)`
     }
   }
 `;
+
+const ProfileRelationsBox = ({ relationName, items }) => {
+  return (
+    <ProfileRelationsBoxWrapper>
+      <h2 className="smallTitle">
+        {`${relationName} `}
+        <span style={{ color: "#2E7BB4" }}>({items.length})</span>
+      </h2>
+      <ul>
+        {items.slice(0, 6).map((item) => {
+          return (
+            <li key={item.id}>
+              <a href={item.link} target="_blank">
+                <img src={item.image}></img>
+                <span>{item.name}</span>
+              </a>
+            </li>
+          );
+        })}
+      </ul>
+      {items.length > 6 ? (
+        <>
+          <hr />
+          <a>
+            <h1
+              style={{
+                fontSize: 16,
+                color: "#2E7BB4",
+                paddingTop: 3,
+                paddingBottom: 2,
+              }}
+            >
+              Ver todos
+            </h1>
+          </a>
+        </>
+      ) : null}
+    </ProfileRelationsBoxWrapper>
+  );
+};
+
+export default ProfileRelationsBox;
