@@ -72,19 +72,17 @@ const ProfileRelationsBox = ({ relationName, items }) => {
       </ul>
       {items.length > 6 ? (
         <>
-          <hr />
-          <a>
-            <h1
+          <hr style={{marginBottom: -3}}/>
+          <h1 >
+            <a
               style={{
                 fontSize: 16,
                 color: "#2E7BB4",
-                paddingTop: 3,
-                paddingBottom: 2,
               }}
             >
               Ver todos
-            </h1>
-          </a>
+            </a>
+          </h1>
         </>
       ) : null}
     </ProfileRelationsBoxWrapper>
