@@ -36,7 +36,7 @@ export default function Home() {
   const [comunidades, setComunidades] = useState([]);
   const [amigos, setAmigos] = useState([]);
 
-  useEffect(() => {
+/*   useEffect(() => {
     fetch(`https://api.github.com/users/${githubUser}/followers`)
       .then((res) => res.json())
       .then((data) => {
@@ -49,7 +49,7 @@ export default function Home() {
           }))
         );
       });
-  }, []);
+  }, []); */
 
   const handleCriaComunidade = (e) => {
     e.preventDefault();
@@ -83,9 +83,9 @@ export default function Home() {
     <>
       <AlurakutMenu githubUser={githubUser} />
       <MainGrid>
-        <div className="profileArea" style={{ gridArea: "profileArea" }}>
+        <aside className="profileArea" style={{ gridArea: "profileArea" }}>
           <ProfileSidebar githubUser={githubUser}></ProfileSidebar>
-        </div>
+        </aside>
         <div style={{ gridArea: "welcomeArea" }}>
           <Box>
             <h1 className="title">Bem vindo(a), {githubUser}</h1>
