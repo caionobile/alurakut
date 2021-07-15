@@ -72,8 +72,8 @@ const ProfileRelationsBox = ({ relationName, items }) => {
       </ul>
       {items.length > 6 ? (
         <>
-          <hr style={{marginBottom: -3}}/>
-          <h1 >
+          <hr style={{ marginBottom: -3 }} />
+          <h1>
             <a
               style={{
                 fontSize: 16,

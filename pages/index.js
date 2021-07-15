@@ -1,35 +1,10 @@
 import MainGrid from "@components/MainGrid";
 import Box from "@components/Box";
-import {
-  AlurakutMenu,
-  OrkutNostalgicIconSet,
-  AlurakutProfileSidebarMenuDefault,
-} from "@libs/AlurakutCommons";
-import ProfileRelations from "@components/ProfileRelations";
+import { AlurakutMenu, OrkutNostalgicIconSet } from "@libs/AlurakutCommons";
+import ProfileRelations from "@components/Profile/ProfileRelations";
+import ProfileSidebar from "@components/Profile/ProfileSidebar";
 import { useEffect, useState } from "react";
-
-const ProfileSidebar = ({ githubUser }) => {
-  return (
-    <Box>
-      <img
-        src={`https://github.com/${githubUser}.png`}
-        style={{ borderRadius: 8 }}
-      ></img>
-      <hr />
-      <p>
-        <a
-          className="boxLink"
-          href={`https://github.com/${githubUser}`}
-          target="_blank"
-        >
-          @{githubUser}
-        </a>
-      </p>
-      <hr />
-      <AlurakutProfileSidebarMenuDefault />
-    </Box>
-  );
-};
+import isURL from "../src/functions";
 
 export default function Home() {
   const githubUser = "caionobile";
@@ -67,18 +42,6 @@ export default function Home() {
     }
   };
 
-  const isURL = (url) => {
-    const pattern = new RegExp(
-      "((http|https)://)(www.)?" +
-        "[a-zA-Z0-9@:%._\\+~#?&//=]" +
-        "{2,256}\\.[a-z]" +
-        "{2,6}\\b([-a-zA-Z0-9@:%" +
-        "._\\+~#?&//=]*)",
-      "i"
-    );
-    return !!pattern.test(url);
-  };
-
   return (
     <>
       <AlurakutMenu githubUser={githubUser} />
@@ -89,7 +52,7 @@ export default function Home() {
         <div style={{ gridArea: "welcomeArea" }}>
           <Box>
             <h1 className="title">Bem vindo(a), {githubUser}</h1>
-            <OrkutNostalgicIconSet></OrkutNostalgicIconSet>
+            <OrkutNostalgicIconSet />
           </Box>
           <Box>
             <h2 className="subTitle">O que deseja fazer?</h2>
