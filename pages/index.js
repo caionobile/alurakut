@@ -24,21 +24,58 @@ export default function Home() {
           }))
         );
       });
+
+    fetch("https://graphql.datocms.com/", {
+      method: "POST",
+      headers: {
+        Authorization: "b0d99af57e4db24ee1b07dee94f774",
+        "Content-Type": "application/json",
+        Accept: "application/json",
+      },
+      body: JSON.stringify({
+        query: `query {
+        allCommunities {
+          id
+          name
+          image
+          creatorSlug
+          link
+        }
+      }`,
+      }),
+    })
+      .then((resp) => {
+        return resp.json();
+      })
+      .then((resp) => {
+        setComunidades(resp.data.allCommunities);
+      });
   }, []);
 
   const handleCriaComunidade = (e) => {
     e.preventDefault();
     const formData = new FormData(e.target);
     const comunidade = {
-      id: new Date().toISOString(),
       name: formData.get("title"),
       image: formData.get("image"),
+      creatorSlug: githubUser,
+      link: "",
     };
     if (comunidade.name) {
       if (!isURL(comunidade.image)) {
         comunidade.image = `https://picsum.photos/400/400?${Date.now()}`;
       }
-      setComunidades([...comunidades, comunidade]);
+      fetch("/api/comunidades", {
+        method: "POST",
+        headers: {
+          "Content-type": "application/JSON",
+        },
+        body: JSON.stringify(comunidade),
+      }).then(async (resp) => {
+        const dados = await resp.json();
+        const comunidade = dados.registro;
+        setComunidades([comunidade, ...comunidades]);
+      });
     }
   };
 
