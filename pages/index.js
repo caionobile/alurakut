@@ -12,7 +12,7 @@ export default function Home() {
   const [amigos, setAmigos] = useState([]);
 
   useEffect(() => {
-    fetch(`https://api.github.com/users/${githubUser}/followers`)
+    /*     fetch(`https://api.github.com/users/${githubUser}/followers`)
       .then(async (res) => {
         const data = await res.json();
         setAmigos(
@@ -26,7 +26,7 @@ export default function Home() {
       })
       .catch((e) => {
         console.log(e);
-      });
+      }); */
 
     fetch("https://graphql.datocms.com/", {
       method: "POST",
@@ -51,7 +51,7 @@ export default function Home() {
     })
       .then(async (resp) => {
         const comm = await resp.json();
-        setComunidades(comm.data.allCommunities);
+        setComunidades(comm.data.allCommunities.reverse());
       })
       .catch((e) => {
         console.log(e);
@@ -81,7 +81,7 @@ export default function Home() {
         .then(async (resp) => {
           const dados = await resp.json();
           const comunidade = dados.registro;
-          setComunidades([comunidade, ...comunidades]);
+          setComunidades([...comunidades, comunidade]);
         })
         .catch((e) => {
           console.log(e);
