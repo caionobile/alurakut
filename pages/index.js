@@ -110,6 +110,7 @@ export default function Home() {
                   name="title"
                   aria-label="Qual vai ser o nome da sua comunidade?"
                   type="text"
+                  autoComplete="off"
                 />
               </div>
               <div>
@@ -118,6 +119,7 @@ export default function Home() {
                   name="image"
                   aria-label="Coloque uma URL para usarmos de capa"
                   type="text"
+                  autoComplete="off"
                 />
               </div>
               <button>Criar comunidade</button>
