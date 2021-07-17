@@ -13,8 +13,8 @@ export default function Home() {
 
   useEffect(() => {
     fetch(`https://api.github.com/users/${githubUser}/followers`)
-      .then((res) => res.json())
-      .then((data) => {
+      .then(async (res) => {
+        const data = await res.json();
         setAmigos(
           data.map((user) => ({
             id: user.login,
@@ -23,12 +23,17 @@ export default function Home() {
             link: `https://github.com/${user.login}`,
           }))
         );
+      })
+      .catch((e) => {
+        console.log(e);
       });
 
     fetch("https://graphql.datocms.com/", {
       method: "POST",
       headers: {
-        Authorization: process.env.NEXT_PUBLIC_DATO_READ_ONLY_API_TOKEN || "b0d99af57e4db24ee1b07dee94f774",
+        Authorization:
+          process.env.NEXT_PUBLIC_DATO_READ_ONLY_API_TOKEN ||
+          "b0d99af57e4db24ee1b07dee94f774",
         "Content-Type": "application/json",
         Accept: "application/json",
       },
@@ -44,11 +49,12 @@ export default function Home() {
       }`,
       }),
     })
-      .then((resp) => {
-        return resp.json();
+      .then(async (resp) => {
+        const comm = await resp.json();
+        setComunidades(comm.data.allCommunities);
       })
-      .then((resp) => {
-        setComunidades(resp.data.allCommunities);
+      .catch((e) => {
+        console.log(e);
       });
   }, []);
 
@@ -71,11 +77,15 @@ export default function Home() {
           "Content-type": "application/JSON",
         },
         body: JSON.stringify(comunidade),
-      }).then(async (resp) => {
-        const dados = await resp.json();
-        const comunidade = dados.registro;
-        setComunidades([comunidade, ...comunidades]);
-      });
+      })
+        .then(async (resp) => {
+          const dados = await resp.json();
+          const comunidade = dados.registro;
+          setComunidades([comunidade, ...comunidades]);
+        })
+        .catch((e) => {
+          console.log(e);
+        });
     }
   };
 
