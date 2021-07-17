@@ -1,5 +1,6 @@
 import { useRouter } from "next/router";
 import { useState } from "react";
+import nookies from "nookies";
 
 export default function LoginScreen() {
   const router = useRouter();
@@ -9,17 +10,23 @@ export default function LoginScreen() {
   const handleLoginRedirect = (e) => {
     e.preventDefault();
     if (githubUser) {
-      fetch(`https://api.github.com/users/${githubUser}/followers`).then(
-        async (res) => {
-          const data = await res.json();
-          if (data.message) {
-            setIsValidGithubUser(false);
-            return;
-          }
-          setIsValidGithubUser(true);
-          router.push("/");
-        }
-      );
+      fetch(`https://alurakut.vercel.app/api/login`, {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({ githubUser: githubUser }),
+      }).then(async (res) => {
+        const data = await res.json();
+        const token = data.token;
+        nookies.set(null, "USER_TOKEN", token, {
+          path: "/",
+          maxAge: 86400 * 7,
+          sameSite: true,
+          secure: true,
+        });
+        router.push("/");
+      });
     }
   };
 
@@ -62,6 +69,7 @@ export default function LoginScreen() {
               onChange={(e) => {
                 setGithubUser(e.target.value);
               }}
+              autoComplete="off"
             />
             <button type="submit">Login</button>
             {isValidGithubUser ? null : (

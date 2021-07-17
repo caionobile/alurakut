@@ -5,14 +5,16 @@ import ProfileRelations from "@components/Profile/ProfileRelations";
 import ProfileSidebar from "@components/Profile/ProfileSidebar";
 import { useEffect, useState } from "react";
 import isURL from "../src/functions";
+import nookies from "nookies";
+import jwt from "jsonwebtoken";
 
-export default function Home() {
-  const githubUser = "caionobile";
+export default function Home({ user }) {
+  const githubUser = user;
   const [comunidades, setComunidades] = useState([]);
   const [amigos, setAmigos] = useState([]);
 
   useEffect(() => {
-    /*     fetch(`https://api.github.com/users/${githubUser}/followers`)
+    fetch(`https://api.github.com/users/${githubUser}/followers`)
       .then(async (res) => {
         const data = await res.json();
         setAmigos(
@@ -26,7 +28,7 @@ export default function Home() {
       })
       .catch((e) => {
         console.log(e);
-      }); */
+      });
 
     fetch("https://graphql.datocms.com/", {
       method: "POST",
@@ -139,4 +141,35 @@ export default function Home() {
       </MainGrid>
     </>
   );
+}
+
+export async function getServerSideProps(context) {
+  const cookies = nookies.get(context);
+  const token = cookies.USER_TOKEN;
+
+  const { isAuthenticated } = await fetch(
+    "https://alurakut.vercel.app/api/auth",
+    {
+      headers: {
+        Authorization: token,
+      },
+    }
+  ).then((res) => res.json());
+
+  if (!isAuthenticated) {
+    return {
+      redirect: {
+        destination: "/login",
+        permanent: false,
+      },
+    };
+  }
+
+  const { githubUser } = jwt.decode(token);
+
+  return {
+    props: {
+      user: githubUser,
+    },
+  };
 }
