@@ -103,3 +103,20 @@ export default function LoginScreen() {
     </main>
   );
 }
+
+export async function getServerSideProps(context) {
+  const cookies = nookies.get(context);
+  if (cookies.USER_TOKEN) {
+    return {
+      redirect: {
+        destination: "../",
+        permanent: false,
+      },
+    };
+  }
+  return {
+    props: {
+      user: "none",
+    },
+  };
+}
