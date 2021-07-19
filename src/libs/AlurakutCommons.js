@@ -1,6 +1,7 @@
 import React from "react";
 import styled, { css } from "styled-components";
 import NextLink from "next/link";
+import nookies from "nookies";
 
 const BASE_URL = "http://alurakut.vercel.app/";
 const v = "1";
@@ -16,6 +17,10 @@ function Link({ href, children, ...props }) {
 // ================================================================================================================
 // Menu
 // ================================================================================================================
+const handleLogoff = () => {
+  nookies.destroy(null, "USER_TOKEN");
+};
+
 export function AlurakutMenu({ githubUser }) {
   const [isMenuOpen, setMenuState] = React.useState(false);
   return (
@@ -39,7 +44,9 @@ export function AlurakutMenu({ githubUser }) {
         </nav>
 
         <nav>
-          <a href={`/logout`}>Sair</a>
+          <a onClick={handleLogoff} href="/login">
+            Sair
+          </a>
           <div>
             <input placeholder="Pesquisar no Alurakut" />
           </div>
@@ -182,7 +189,11 @@ function AlurakutMenuProfileSidebar({ githubUser }) {
         />
         <hr />
         <p>
-          <a className="boxLink" href={`https://github.com/${githubUser}`} target="_blank">
+          <a
+            className="boxLink"
+            href={`https://github.com/${githubUser}`}
+            target="_blank"
+          >
             @{githubUser}
           </a>
         </p>
